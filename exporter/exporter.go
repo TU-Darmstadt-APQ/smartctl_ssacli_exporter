@@ -54,7 +54,7 @@ func (e *Exporter) Collect(ch chan<- prometheus.Metric) {
 	for _, physDisk := range physDisk {
 		if physDisk != "" {
 			collector.NewSsacliPhysDiskCollector(physDisk, conID).Collect(ch)
-			collector.NewSmartctlDiskCollector(physDisk, physDiskN).Collect(ch)
+			collector.NewSmartctlDiskCollector(physDisk, physDiskN-1).Collect(ch)
 			physDiskN++
 		}
 	}
