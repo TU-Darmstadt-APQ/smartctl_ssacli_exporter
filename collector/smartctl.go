@@ -35,6 +35,7 @@ type SmartctlDiskCollector struct {
 	offlineUncorrectable  *prometheus.Desc
 	uDMACRCErrorCount     *prometheus.Desc
 	unusedRsvdBlkCntTot   *prometheus.Desc
+	grownDefects          *prometheus.Desc
 }
 
 // NewSmartctlDiskCollector Create new collector
@@ -141,6 +142,12 @@ func NewSmartctlDiskCollector(diskID string, diskN int) *SmartctlDiskCollector {
 			labels,
 			nil,
 		),
+		grownDefects: prometheus.NewDesc(
+			prometheus.BuildFQName(namespace, subsystem, "grownDefects"),
+			"Smartctl elements in grown defect list",
+			labels,
+			nil,
+		),
 	}
 }
 
@@ -161,6 +168,7 @@ func (c *SmartctlDiskCollector) Describe(ch chan<- *prometheus.Desc) {
 		c.offlineUncorrectable,
 		c.uDMACRCErrorCount,
 		c.unusedRsvdBlkCntTot,
+		c.grownDefects,
 	}
 	for _, d := range ds {
 		ch <- d
@@ -289,6 +297,12 @@ func (c *SmartctlDiskCollector) collect(ch chan<- prometheus.Metric) (*prometheu
 		c.unusedRsvdBlkCntTot,
 		prometheus.GaugeValue,
 		float64(data.SmartctlDiskDataAttr[0].UnusedRsvdBlkCntTot),
+		labels...,
+	)
+	ch <- prometheus.MustNewConstMetric(
+		c.grownDefects,
+		prometheus.GaugeValue,
+		float64(data.SmartctlDiskDataAttr[0].GrownDefects),
 		labels...,
 	)
 

@@ -35,6 +35,7 @@ type SmartctlDiskDataAttr struct {
 	OfflineUncorrectable  float64
 	UDMACRCErrorCount     float64
 	UnusedRsvdBlkCntTot   float64
+	GrownDefects          float64
 }
 
 // ParseSmartctlDisk return specific metric
@@ -101,40 +102,49 @@ func parseSmartctlDiskAtr(s string) SmartctlDiskDataAttr {
 	for _, line := range lines {
 		vals := reSpaces.Split(trim(line), -1)
 
-		if len(vals) < 10 {
-			continue
+		if len(vals) == 10 {
+			// If the line looks like this:
+			// ID# ATTRIBUTE_NAME          FLAG     VALUE WORST THRESH TYPE      UPDATED  WHEN_FAILED RAW_VALUE
+			// 1 Raw_Read_Error_Rate     0x000f   092   092   006    Pre-fail  Always       -       104646032
+			switch vals[1] {
+			case "Raw_Read_Error_Rate":
+				tmp.RawReadErrorRate = toFLO(vals[9])
+			case "Reallocated_Sector_Ct":
+				tmp.ReallocatedSectorCt = toFLO(vals[9])
+			case "Power_On_Hours":
+				tmp.PowerOnHours = toFLO(vals[9])
+			case "Power_Cycle_Count":
+				tmp.PowerCycleCount = toFLO(vals[9])
+			case "Runtime_Bad_Block":
+				tmp.RuntimeBadBlock = toFLO(vals[9])
+			case "End-to-End_Error":
+				tmp.EndToEndError = toFLO(vals[9])
+			case "Reported_Uncorrect":
+				tmp.ReportedUncorrect = toFLO(vals[9])
+			case "Command_Timeout":
+				tmp.CommandTimeout = toFLO(vals[9])
+			case "Hardware_ECC_Recovered":
+				tmp.HardwareECCRecovered = toFLO(vals[9])
+			case "Reallocated_Event_Count":
+				tmp.ReallocatedEventCount = toFLO(vals[9])
+			case "Current_Pending_Sector":
+				tmp.CurrentPendingSector = toFLO(vals[9])
+			case "Offline_Uncorrectable":
+				tmp.OfflineUncorrectable = toFLO(vals[9])
+			case "UDMA_CRC_Error_Count":
+				tmp.UDMACRCErrorCount = toFLO(vals[9])
+			case "Unused_Rsvd_Blk_Cnt_Tot":
+				tmp.UnusedRsvdBlkCntTot = toFLO(vals[9])
+			}
+		} else if len(vals) == 2 {
+			// If the line looks like this:
+			// Elements in grown defect list: 71
+			switch vals[0] {
+			case "Elements in grown defect list":
+				tmp.GrownDefects = toFLO(vals[1])
+			}
 		}
 
-		switch vals[1] {
-		case "Raw_Read_Error_Rate":
-			tmp.RawReadErrorRate = toFLO(vals[9])
-		case "Reallocated_Sector_Ct":
-			tmp.ReallocatedSectorCt = toFLO(vals[9])
-		case "Power_On_Hours":
-			tmp.PowerOnHours = toFLO(vals[9])
-		case "Power_Cycle_Count":
-			tmp.PowerCycleCount = toFLO(vals[9])
-		case "Runtime_Bad_Block":
-			tmp.RuntimeBadBlock = toFLO(vals[9])
-		case "End-to-End_Error":
-			tmp.EndToEndError = toFLO(vals[9])
-		case "Reported_Uncorrect":
-			tmp.ReportedUncorrect = toFLO(vals[9])
-		case "Command_Timeout":
-			tmp.CommandTimeout = toFLO(vals[9])
-		case "Hardware_ECC_Recovered":
-			tmp.HardwareECCRecovered = toFLO(vals[9])
-		case "Reallocated_Event_Count":
-			tmp.ReallocatedEventCount = toFLO(vals[9])
-		case "Current_Pending_Sector":
-			tmp.CurrentPendingSector = toFLO(vals[9])
-		case "Offline_Uncorrectable":
-			tmp.OfflineUncorrectable = toFLO(vals[9])
-		case "UDMA_CRC_Error_Count":
-			tmp.UDMACRCErrorCount = toFLO(vals[9])
-		case "Unused_Rsvd_Blk_Cnt_Tot":
-			tmp.UnusedRsvdBlkCntTot = toFLO(vals[9])
-		}
 	}
 
 	return tmp
