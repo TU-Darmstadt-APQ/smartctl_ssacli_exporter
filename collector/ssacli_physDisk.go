@@ -110,7 +110,6 @@ func (c *SsacliPhysDiskCollector) collect(ch chan<- prometheus.Metric) (*prometh
 			data.SsacliPhysDiskData[0].IntType,
 			data.SsacliPhysDiskData[0].Size,
 			data.SsacliPhysDiskData[0].BlockSize,
-			data.SsacliPhysDiskData[0].Speed,
 			data.SsacliPhysDiskData[0].Firmware,
 			data.SsacliPhysDiskData[0].SN,
 			data.SsacliPhysDiskData[0].WWID,
@@ -123,12 +122,14 @@ func (c *SsacliPhysDiskCollector) collect(ch chan<- prometheus.Metric) (*prometh
 		c.curTemp,
 		prometheus.GaugeValue,
 		float64(data.SsacliPhysDiskData[0].CurTemp),
+		int16(data.SsacliPhysDiskData[0].Speed),
 		labels...,
 	)
 	ch <- prometheus.MustNewConstMetric(
 		c.maxTemp,
 		prometheus.GaugeValue,
 		float64(data.SsacliPhysDiskData[0].MaxTemp),
+		int16(data.SsacliPhysDiskData[0].Speed),
 		labels...,
 	)
 	return nil, nil
