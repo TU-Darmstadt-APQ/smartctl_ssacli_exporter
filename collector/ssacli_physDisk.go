@@ -31,6 +31,7 @@ func NewSsacliPhysDiskCollector(diskID, conID string) *SsacliPhysDiskCollector {
 			"IntType",
 			"Size",
 			"BlockSize",
+			"Rotional Speed",
 			"Firmware",
 			"SN",
 			"WWID",
@@ -47,14 +48,12 @@ func NewSsacliPhysDiskCollector(diskID, conID string) *SsacliPhysDiskCollector {
 		curTemp: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, "curTemp"),
 			"Actual physical disk temperature",
-			"Rotational speed",
 			labels,
 			nil,
 		),
 		maxTemp: prometheus.NewDesc(
 			prometheus.BuildFQName(namespace, subsystem, "maxTmp"),
 			"Physical disk maximum temperature",
-			"Rotational speed",
 			labels,
 			nil,
 		),
