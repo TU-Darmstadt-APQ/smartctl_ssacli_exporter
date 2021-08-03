@@ -40,7 +40,7 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 	)
 	for _, line := range strings.Split(s, "\n") {
 		kvs := strings.Trim(line, " \t")
-		kv := strings.Split(kvs, ":")
+		kv := strings.Split(kvs, ": ")
 
 		/* The input looks like this:
 		   physicaldrive 1I:1:2
