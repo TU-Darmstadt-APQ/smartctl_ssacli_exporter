@@ -136,12 +136,15 @@ func parseSmartctlDiskAtr(s string) SmartctlDiskDataAttr {
 			case "Unused_Rsvd_Blk_Cnt_Tot":
 				tmp.UnusedRsvdBlkCntTot = toFLO(vals[9])
 			}
-		} else if len(vals) == 2 {
+		} else {
 			// If the line looks like this:
 			// Elements in grown defect list: 71
-			switch vals[0] {
-			case "Elements in grown defect list":
-				tmp.GrownDefects = toFLO(vals[1])
+			vals := strings.Split(trim(line), ": ")
+			if len(vals) == 2 {
+				switch vals[0] {
+				case "Elements in grown defect list":
+					tmp.GrownDefects = toFLO(vals[1])
+				}
 			}
 		}
 
