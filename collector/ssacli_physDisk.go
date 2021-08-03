@@ -31,6 +31,7 @@ func NewSsacliPhysDiskCollector(diskID, conID string) *SsacliPhysDiskCollector {
 			"IntType",
 			"Size",
 			"BlockSize",
+			"Firmware",
 			"SN",
 			"WWID",
 			"Model",
@@ -38,7 +39,7 @@ func NewSsacliPhysDiskCollector(diskID, conID string) *SsacliPhysDiskCollector {
 		}
 	)
 
-	// Rerutn Colected metric to ch <-
+	// Return Colected metric to ch <-
 	// Include labels
 	return &SsacliPhysDiskCollector{
 		diskID: diskID,
@@ -108,6 +109,7 @@ func (c *SsacliPhysDiskCollector) collect(ch chan<- prometheus.Metric) (*prometh
 			data.SsacliPhysDiskData[0].IntType,
 			data.SsacliPhysDiskData[0].Size,
 			data.SsacliPhysDiskData[0].BlockSize,
+			data.SsacliPhysDiskData[0].Firmware,
 			data.SsacliPhysDiskData[0].SN,
 			data.SsacliPhysDiskData[0].WWID,
 			data.SsacliPhysDiskData[0].Model,
