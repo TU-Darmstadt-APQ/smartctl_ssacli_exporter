@@ -77,7 +77,7 @@ func (c *SsacliLogDiskCollector) collect(ch chan<- prometheus.Metric) (*promethe
 	out, err := exec.Command("bash", "-c", cmd).CombinedOutput()
 
 	if err != nil {
-		log.Debugln("[ERROR] smart log: \n%s\n", out)
+		log.Debugln("[ERROR] ssacli log: \n%s\n", out)
 		return nil, err
 	}
 

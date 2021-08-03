@@ -42,8 +42,33 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 		kvs := strings.Trim(line, " \t")
 		kv := strings.Split(kvs, ": ")
 
-		if len(kv) == 2 {
-
+		/* The firmware output might be be larger than 2 values:
+		   The input looks like this:
+		   physicaldrive 1I:1:2
+		   Port: 1I
+		   Box: 1
+		   Bay: 2
+		   Status: OK
+		   Drive Type: Data Drive
+		   Interface Type: SAS
+		   Size: 72 GB
+		   Drive exposed to OS: False
+		   Logical/Physical Block Size: 512/512
+		   Rotational Speed: 15000
+		   Firmware Revision: HPD2 (FW update is recommended to minimum version: HPD7)
+		   Serial Number: 3PD0EYNW00009744Q72N
+		   WWID: 5000C5000522B3B1
+		   Model: HP      DH072ABAA6
+		   Current Temperature (C): 32
+		   Maximum Temperature (C): 41
+		   PHY Count: 1
+		   PHY Transfer Rate: 3.0Gbps
+		   PHY Physical Link Rate: Unknown
+		   PHY Maximum Link Rate: Unknown
+		   Sanitize Erase Supported: False
+		   Shingled Magnetic Recording Support: None
+		*/
+		if len(kv) >= 2 {
 			switch kv[0] {
 			case "Bay":
 				tmp.Bay = kv[1]

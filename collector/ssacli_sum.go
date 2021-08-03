@@ -113,14 +113,14 @@ func (c *SsacliSumCollector) collect(ch chan<- prometheus.Metric) (*prometheus.D
 	out, err := exec.Command("bash", "-c", cmd).CombinedOutput()
 
 	if err != nil {
-		log.Debugln("[ERROR] smart log: \n%s\n", out)
+		log.Debugln("[ERROR] ssacli log: \n%s\n", out)
 		return nil, err
 	}
 
 	data := parser.ParseSsacliSum(string(out))
 
 	if data == nil {
-		log.Fatal("Unable get data from ssacli sumarry exporter")
+		log.Fatal("Unable get data from ssacli summary exporter")
 		return nil, nil
 	}
 

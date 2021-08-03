@@ -91,14 +91,14 @@ func (c *SsacliPhysDiskCollector) collect(ch chan<- prometheus.Metric) (*prometh
 	out, err := exec.Command("bash", "-c", cmd).CombinedOutput()
 
 	if err != nil {
-		log.Debugln("[ERROR] smart log: \n%s\n", out)
+		log.Debugln("[ERROR] ssacli log: \n%s\n", out)
 		return nil, err
 	}
 
 	data := parser.ParseSsacliPhysDisk(string(out))
 
 	if data == nil {
-		log.Fatal("Unable get data from ssacli sumarry exporter")
+		log.Fatal("Unable get data from ssacli physical disc exporter")
 		return nil, nil
 	}
 
