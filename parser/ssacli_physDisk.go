@@ -58,7 +58,7 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 				tmp.Size = kv[1]
 			case "Logical/Physical Block Size":
 				tmp.BlockSize = kv[1]
-			case "Firmware Revision:":
+			case "Firmware Revision":
 				tmp.Firmware = kv[1]
 			case "WWID":
 				tmp.WWID = kv[1]
