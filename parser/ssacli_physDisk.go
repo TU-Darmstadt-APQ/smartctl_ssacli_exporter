@@ -69,34 +69,36 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 		   Sanitize Erase Supported: False
 		   Shingled Magnetic Recording Support: None
 		*/
-		if len(kv) == 2 {
-			switch kv[0] {
+		if len(kv) == 3 {
+			key = kv[1]
+			value = kv[2]
+			switch key {
 			case "Bay":
-				tmp.Bay = kv[1]
+				tmp.Bay = value
 			case "Serial Number":
-				tmp.SN = kv[1]
+				tmp.SN = value
 			case "Status":
-				tmp.Status = kv[1]
+				tmp.Status = value
 			case "Drive Type":
-				tmp.DriveType = kv[1]
+				tmp.DriveType = value
 			case "Interface Type":
-				tmp.IntType = kv[1]
+				tmp.IntType = value
 			case "Size":
-				tmp.Size = kv[1]
+				tmp.Size = value
 			case "Logical/Physical Block Size":
-				tmp.BlockSize = kv[1]
+				tmp.BlockSize = value
 			case "Rotational Speed":
-				tmp.Speed = kv[1]
+				tmp.Speed = value
 			case "Firmware Revision":
-				tmp.Firmware = kv[1]
+				tmp.Firmware = value
 			case "WWID":
-				tmp.WWID = kv[1]
+				tmp.WWID = value
 			case "Model":
-				tmp.Model = kv[1]
+				tmp.Model = value
 			case "Current Temperature (C)":
-				tmp.CurTemp = toFLO(kv[1])
+				tmp.CurTemp = toFLO(value)
 			case "Maximum Temperature (C)":
-				tmp.MaxTemp = toFLO(kv[1])
+				tmp.MaxTemp = toFLO(value)
 			}
 		}
 	}
