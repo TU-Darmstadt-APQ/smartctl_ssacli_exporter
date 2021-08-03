@@ -70,8 +70,8 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 		   Shingled Magnetic Recording Support: None
 		*/
 		if len(kv) == 3 {
-			key = kv[1]
-			value = kv[2]
+			key := kv[1]
+			value := kv[2]
 			switch key {
 			case "Bay":
 				tmp.Bay = value
