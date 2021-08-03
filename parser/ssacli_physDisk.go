@@ -1,6 +1,7 @@
 package parser
 
 import (
+	"regexp"
 	"strings"
 )
 
@@ -38,9 +39,10 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 	var (
 		tmp SsacliPhysDiskData
 	)
+	re := regexp.MustCompile(`(.+?)\: (.+)`)
 	for _, line := range strings.Split(s, "\n") {
 		kvs := strings.Trim(line, " \t")
-		kv := strings.Split(kvs, ": ")
+		kv := re.FindStringSubmatch(kvs)
 
 		/* The input looks like this:
 		   physicaldrive 1I:1:2
