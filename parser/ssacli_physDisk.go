@@ -40,10 +40,9 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 	)
 	for _, line := range strings.Split(s, "\n") {
 		kvs := strings.Trim(line, " \t")
-		kv := strings.Split(kvs, ": ")
+		kv := strings.Split(kvs, ":")
 
-		/* The firmware output might be be larger than 2 values:
-		   The input looks like this:
+		/* The input looks like this:
 		   physicaldrive 1I:1:2
 		   Port: 1I
 		   Box: 1
@@ -68,7 +67,7 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 		   Sanitize Erase Supported: False
 		   Shingled Magnetic Recording Support: None
 		*/
-		if len(kv) >= 2 {
+		if len(kv) == 2 {
 			switch kv[0] {
 			case "Bay":
 				tmp.Bay = kv[1]
