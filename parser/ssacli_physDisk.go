@@ -17,6 +17,7 @@ type SsacliPhysDiskData struct {
 	IntType   string
 	Size      string
 	BlockSize string
+	Speed     int16
 	Firmware  string
 	SN        string
 	WWID      string
@@ -58,6 +59,8 @@ func parseSsacliPhysDisk(s string) *SsacliPhysDisk {
 				tmp.Size = kv[1]
 			case "Logical/Physical Block Size":
 				tmp.BlockSize = kv[1]
+			case "Rotational Speed":
+				tmp.Speed = toINT16(kv[1])
 			case "Firmware Revision":
 				tmp.Firmware = kv[1]
 			case "WWID":
