@@ -4,6 +4,7 @@ FROM golang:1.21.1-bookworm as builder
 
 ARG GIT_REPOSITORY
 ARG SSH_DEPLOY_KEY
+ARG SSACLI_VERSION
 
 RUN \
   apt-get update && \
